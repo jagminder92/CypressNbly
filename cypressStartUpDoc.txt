@@ -1,0 +1,50 @@
+Cypress UI Automation 
+
+Last Updated: 17/06/2020
+
+StartUp Guide + Report Generation
+
+Cypress Installation and Project Setup>>
+*Download Node :- https://nodejs.org/en/download/
+*Set Node Home in Environmental Variables :- Go to SystemProperties>Advanced>EnvironmentVariables>New> varName:NODE_HOME & varValue:(nodejs path)>ok
+*Create Base Cypress working folder :- Create new folder> eg.) CypressAutomation (Empty)
+*Download Visual Studio Code editor :- https://code.visualstudio.com/download
+		-Open Base Cypress folder in editor > Open Terminal in editor
+*Generate Package.json :- run the command "npm init" >packageName: eg.)automation > yes
+		-For reference> https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements
+*Download Cypress dependencies :- run the command "npm install cypress --save-dev" (might take some time)
+*To Open the Cypress Portal :- run the command "node_modules/.bin/cypress open"
+*After the Portal opens :- All the test files will be visible. You can run them by clicking on the test file name
+
+
+*>>>>Incase you clone this project, it will contain a file called package.json, which will contain a list of dependencies. 
+	 You can run the command "npm install" to install all the dependencies listed in the file.
+	 After you run the command a folder named "node_modules" will be visible in your project structure (the folder is important since it provides support for functionalities)
+	 To open the cypress portal, run the command "npm run runner" (might take a while to open)
+	 Finally Click on the Spec file that you need to run
+
+
+*>>>>Report Generation> There are 3 ways to generate Report :
+		1> Mochawesome Report Generation >>>For Refference go to "https://docs.cypress.io/guides/tooling/reporters.html#Custom-reporter"
+		2> Cypress Dashboard Report Generation
+		>>>>To generate the dashboard report, you have to Set up a project to record :
+			1> Click on Runs tab within the Test Runner.
+			2> Click Set up Project to Record.
+			3> You will need to log in to record your tests, so you will need to log in to the Cypress Dashboard.
+			4> After login, Fill in the name of your project(For display purpose).
+			5> Choose who owns the project
+			6> Choose whether the project is Public or Private.
+			7> Click Setup Project.
+			8> Now you should see a view explaining how to record your first run.
+			9> Now to Generate the Report you can run the command "cypress run --record --key <record key>".
+			>>>In the runs tab you can find a history of reports generated.
+			>>>For more details on Report Generation Reffer "https://docs.cypress.io/guides/dashboard/projects.html#Setup"
+		3> Allure Reports 
+		>>>>Dependencies needed are "allure-commandline" and "mocha-allure-reporter" (already included in package.json...will get installed once "npm install" command is run at the initial stage)
+		>>>>This command is used to run all the tests > "npm run test -- --browser chrome --reporter mocha-allure-reporter"
+		>>>>If you need to run the tests module wise or spec file wise, just give an additional flag in the command and include the path. Eg) "npm run test -- --browser chrome --reporter mocha-allure-reporter --spec "cypress\integration\specs\loginModule\*" 
+		>>>>Once the tests finish running, a folder with test info will get generated.
+		>>>>This command will generate the report based on the previous folder generated and create a folder "allure-report" > "allure generate <folderName> --clean -o allure-report"
+		>>>>To view the report, open the allure-report folder and view the index.html file in Live Server(right click on index.html and click on option Open with Live Server)
+
+For Queries Contact>>> leonora.fernandes@zapcg.com

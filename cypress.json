@@ -1,0 +1,12 @@
+{
+  "defaultCommandTimeout": 40000,
+  "pageLoadTimeout": 40000,
+  "env": {
+    "url": "https://portal-test.dwyergroup.com/Account/Login?ReturnUrl=%2f",
+    "managedUsersUrl": "https://portal-test.dwyergroup.com/Users"
+  },
+  "projectId": "gqunbx",
+  "videoUploadOnPasses": false,
+  "video": false,
+  "experimentalShadowDomSupport": true
+}

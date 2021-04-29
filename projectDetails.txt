@@ -1,0 +1,72 @@
+*>>>>neighborlyUI-test project contains 4 kinds of approaches :
+
+		1> Writing a test case scenario with page object files along with accessing data from fixtures.
+
+		2> Writing a test case scenario with page object files along with accessing data from your PC's local storage.
+		
+		3> Using Encryption to hide data values -> library used is cryptoJS.
+		
+		4> Fetching records from Database to perform Assertions.
+		
+		>>>According to needs, these approaches can be mixed and matched since they are independent of one another.
+
+*>>>What Files Does the Project Contain :
+
+	>FIXTURES folder contains data files in json format.
+		>concepts.json :Contains the list of concepts fetched from the UI
+		>cryptoData.json :Contains encrypted credentials
+		>data.json :Contains all the data necessary to perform assertions or type texts
+		>dbConceptsData.json :Contains the data fetched from dbo.concepts from the database
+		>serviceList.json :Contains the list of services from the dropdown box from the UI
+
+	>SPECS folder contains all Module folders, Module folders contain Spec files that perform the tests
+		>loginSpec.js :Tests login,forgot password and logout scenario
+		>cryptoTest.js :Tests if the encryption is working fine (can be deleted later)
+		>postalCodeSpec.js :Tests if the dropdown List is Valid, Checks for conflicting and non conflicting scenarios
+		>franchiseProfilesSpec.js :Tests all kinds of scenarios related to filter searches
+		>conceptDefaultsSpec.js :Tests if the list in the UI matches the values in the database
+
+	>PLUGINS folder contains plugin configurations.
+		>index.js :Contains sqlServer plugin for database connection
+
+	>SUPPORT folder contains dbConfig folder, pageObjects folder and commands.js file
+		>commands.js :Contains functions written by the tester
+		>dbFetch.js :Contains database connection and a query to select values and write to a file
+		>All the pageObject files contain elements from that particular pages to be accessed in the spec files
+
+	>NODE_MODULES folder contains all the dependencies that you require to make your project work
+
+	>CYPRESS.JSON:Contains system values, environment variables and project ID
+
+	>PACKAGE.JSON :Contains a list of depencies and scripts
+
+*>>>How does the DATABASE section work :
+	>Files Related are : 
+		dbFetch.js from dbConfig folder, 
+		conceptDefaultsSpec.js from Administration-Module folder, 
+		package.json
+
+	>Working : dbFetch.js Role >
+					The connection is established by creating a sql Connection pool.
+					A new request is made to the database.
+					A query selects all the concepts from dbo.concepts table.
+					It then proceed towards creating a json file named dbConceptsData.json and stores all the values queried in it.
+					It then closes the connection.
+
+			   package.json Role >
+			  		A script is written to execute dbFetch.js file seperately.
+
+			   conceptDefaultsSpec.js Role >
+			   		Inside the "it" block navigation is done till the Concept Default Page.
+					cy.exec() executes the script defined in package.json. Hence in this step the data is fetched and stored in the file.
+					Then the data from dbConceptsData.json is initialised.
+					each() is used to iterate through the list displayed on the Concepts Default Page.
+					During the iteration it trims the text and compares it to the item in dbConceptsData.json in order, Since the data fetched from the database and the list displayed in the UI are in the same sorted order.
+					If a match is found a counter will increment.
+					Finally after iterating through the full list it proceeds to then() in which it matches the counter value with the count of the fetched values.
+					Hence it checks if all the elements have matched and also if the count is equal.
+
+>>>REPORTS: 
+	For Reports we use Allure Reports for graphical interface.
+	Also Cypress Dashboard is used for recent runs Report.
+	Also configured a mochawesome reporter for additonal reporting.
